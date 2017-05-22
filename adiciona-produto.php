@@ -1,22 +1,30 @@
-<?php include("cabecalho.php"); ?>
 <?php
-	function insereProduto($conexao,$nome,$preco)
-	{
-		$query = "insert into produtos (nome,preco) values ('{$nome}',{$preco})";
-		return mysqli_query($conexao,$query);
-	}
 
-	$nome = $_GET["nome"];
-	$preco = $_GET["preco"];
-	$conexao = mysqli_connect('localhost','root','','loja');
+    include ("conecta.php");
+    include ("banco-produto.php");
+    include ("cabecalho.php");
+?>
+<?php
+	$nome = $_POST["nome"];
+	$preco = $_POST["preco"];
+	$descricao = $_POST["descricao"];
+	$categoria_id = $_POST["categoria_id"];
+	if(array_key_exists("usado",$_POST)){
+        $usado = "true";
+    }else{
+        $usado ="false";
+    }
 		
-	if (insereProduto($conexao,$nome,$preco)) { ?>
+	if (insereProduto($conexao,$nome,$preco,$descricao,$categoria_id,$usado)) { ?>
 		<p class="text-success">Produto <?=$nome?>,<?=$preco ?> adicionado com sucesso!</p>
-	<?php } else { ?>
-		<p class="text-danger">Produto <?=$nome?> não foi adicionado!</p>
+	<?php } else {
+	    $msg = mysqli_error($conexao);
+	    ?>
+		<p class="text-danger">Produto <?=$nome?> não foi adicionado!:<?=$msg?></p>
 		
 	<?php }
-		mysqli_close($conexao); 
+		mysqli_close($conexao); #pho fecha automaticamente a conexão pra mim
 	?>
 			
 <?php include("rodape.php"); ?>
+   

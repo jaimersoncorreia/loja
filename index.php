@@ -7,5 +7,7 @@
  */
 ?>
 <?php include("cabecalho.php"); ?>
-	<h1>Bem vindo!</h1>
+	<h1>Seja bem vindo à loja do Jaimerson!</h1>
+
+
 <?php include("rodape.php"); ?>
